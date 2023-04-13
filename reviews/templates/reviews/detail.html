@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>{{ review.title }}</h3>
+<a href="{% url 'reviews:update' review.pk %}">수정하기</a>
+<form action="{% url 'reviews:delete' review.pk %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="삭제" class="btn btn-link remove-btn">
+</form>
+<form action="#" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit">
+</form>
+{% for comment in comments %}
+<p>{{ comment.user }}</p>
+<p>{{ comment.content }}</p>
+{% endfor %}
+{% endblock content %}
