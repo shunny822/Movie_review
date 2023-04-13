@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <p>detail</p>
+  <p>작성자: {{account}}</p>
+  <p>email: {{account.email}}</p>
+  <p>birthday: {{account.birthday}}</p>
+  {% for review in reviews %}
+    <p>리뷰 제목: {{review.title}}</p>
+    <p>리뷰 내용: {{review.content}}</p>
+    <p>영화 이름: {{review.movie}}</p>
+  {% endfor %}
+  <a href="{% url 'accounts:update' %}">Update</a>
+{% endblock content %}

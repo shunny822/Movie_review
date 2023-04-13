@@ -25,6 +25,7 @@ class CustomUserChangeForm(UserChangeForm):
         )
     )
 
+    password= None
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
         fields = ('email', 'username', 'birthday',)
