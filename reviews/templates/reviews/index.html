@@ -14,17 +14,24 @@ a {
 .remove-btn {
   color: red;
 }
+
+.review-user {
+  font-size: 13px;
+
+}
 {% endblock style %}
 
 {% block content %}
-<h1>index</h1>
-<a href="{% url 'reviews:create' %}">작성하기</a>
+<h1 class="mb-4">모든 리뷰</h1>
 {% for review in reviews %}
   <div class="review">
     <a href="{% url 'reviews:detail' review.pk %}">
-      <p class="movie">{{review.movie}}</p>
-      <p class="title">{{review.title}}</p>
+      <div class="d-flex justify-content-between align-items-end">
+        <div>{{review.movie}}</div>
+        <div class="review-user ">작성자 : {{ review.user }}</div>
+      </div>
       <hr>
+      <p class="title fw-bold">{{review.title}}</p>
       <p>{{review.content}}</p>
       {% if request.user == review.user %}
       <form action="{% url 'reviews:delete' review.pk %}" method="POST"  class="text-end">

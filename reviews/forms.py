@@ -9,6 +9,14 @@ class ReviewForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    content = forms.CharField(
+        label = '',
+        widget = forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            },
+        ),
+    )
     class Meta():
         model = Comment
         fields = ('content',)
