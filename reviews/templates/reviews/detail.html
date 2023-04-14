@@ -1,31 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3>{{ review.title }}</h3>
-<h4>영화 : {{ review.movie }}</h4>
-<p>내용 : {{ review.content }}</p>
-{% if request.user == review.user %}
-  <a href="{% url 'reviews:update' review.pk %}">수정하기</a>
-  <form action="{% url 'reviews:delete' review.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="삭제" class="btn btn-link remove-btn">
-  </form>
-{% endif %}
-<hr>
-<p class="mb-2">댓글 작성</p>
-<form class="d-flex" action="{% url 'reviews:create_comment' review.pk %}" method="POST">
-  {% csrf_token %}
-  <div style="width:700px;">{{ form.as_p }}</div>
-  <input class="ms-3 btn btn-info text-light" type="submit">
-</form>
-{% for comment in comments %}
-  <p>{{ comment.user }}</p>
-  <p>{{ comment.content }}</p>
-  {% if request.user == comment.user %}
-    <form action="{% url 'reviews:delete_comment' review.pk comment.pk %}" method="POST">
+<div class= 'position-relative'>
+  <a href="{% url 'reviews:index' %}" class="me-2 position-absolute" style='left:-30px;'><i class="bi bi-chevron-left"></i></a>
+  <h3>{{ review.title }}</h3>
+  <p>작성자 : {{review.user}}</p>
+  <p style='font-size : 12px; margin-top : 5px;'>{{review.created_at}}</p>
+  <hr>
+  <h4>{{ review.movie }}</h4>
+  <div style='overflow-wrap: break-word; min-height: 300px;' >{{ review.content }}</div>
+  {% if request.user == review.user %}
+  <div class='d-flex justify-content-end'>
+    <a class="btn btn-link update-btn" href="{% url 'reviews:update' review.pk %}">수정하기</a>
+    <form action="{% url 'reviews:delete' review.pk %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="삭제">
+      <input type="submit" value="삭제" class="btn btn-link remove-btn">
     </form>
+  </div>
   {% endif %}
-{% endfor %}
+  <hr>
+  <p class="mb-2">댓글 {{ comments|length }}</p>
+  <form class="d-flex mb-4" action="{% url 'reviews:create_comment' review.pk %}" method="POST">
+    {% csrf_token %}
+    <div style="width:900px;">{{ form.as_p }}</div>
+    <input class="ms-3 btn btn-info text-light" type="submit">
+  </form>
+  {% for comment in comments %}
+  <div class='d-flex justify-content-between align-items-center'>
+    <div class='mb-2'>{{ comment.user }}</div>
+    <div style='font-size: 12px;'>{{comment.created_string}}</div>
+  </div> 
+    <p style='overflow-wrap: break-word;' >{{ comment.content }}</p>
+    {% if request.user == comment.user %}
+      <form class='text-end' action="{% url 'reviews:delete_comment' review.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제" class="btn btn-link remove-btn" style='font-weight: normal;'>
+      </form>
+    {% endif %}
+    <hr>
+  {% endfor %}
+</div>
 {% endblock content %}

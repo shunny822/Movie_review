@@ -17,7 +17,6 @@ a {
 
 .review-user {
   font-size: 13px;
-
 }
 {% endblock style %}
 
@@ -28,15 +27,20 @@ a {
     <a href="{% url 'reviews:detail' review.pk %}">
       <div class="d-flex justify-content-between align-items-end">
         <div>{{review.movie}}</div>
-        <div class="review-user ">작성자 : {{ review.user }}</div>
+        <div>
+          <div class="review-user">작성자 : {{ review.user }}</div>
+          <p class="text-end review-user">
+            <i class="bi bi-chat-left-fill"></i> {{review.comment_set.all|length }} <span class='ms-2'>{{review.created_string}}</span> 
+          </p>
+        </div>
       </div>
       <hr>
       <p class="title fw-bold">{{review.title}}</p>
-      <p>{{review.content}}</p>
+      <p class='text-truncate'>{{review.content}}</p>
       {% if request.user == review.user %}
       <form action="{% url 'reviews:delete' review.pk %}" method="POST"  class="text-end">
         {% csrf_token %}
-        <input type="submit" value="삭제" class="btn btn-link remove-btn">
+        <input type="submit" value="삭제" class="btn remove-btn">
       </form>
       {% endif %}
     </a>

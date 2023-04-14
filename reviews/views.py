@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Review, Comment
 from .forms import ReviewForm, CommentForm
+from datetime import datetime
+
 
 # Create your views here.
 
@@ -15,6 +17,8 @@ def index(request):
 
 def detail(request, review_pk):
     review = Review.objects.get(pk=review_pk)
+    # datetime_now = datetime.now().replace(tzinfo=None) - review.created_at
+    # print(datetime_now)
     form = CommentForm()
     comments = review.comment_set.all()
     context = {

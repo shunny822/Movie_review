@@ -13,10 +13,14 @@ class CommentForm(forms.ModelForm):
         label = '',
         widget = forms.TextInput(
             attrs={
-                'class': 'form-control'
+                'placeholder' : '댓글 작성',
+                'class': 'form-control',
             },
         ),
     )
     class Meta():
         model = Comment
         fields = ('content',)
+
+
+    
