@@ -5,8 +5,13 @@
 <a href="{% url 'reviews:index' %}" class="me-2 position-absolute" style='left:-30px;'><i class="bi bi-chevron-left"></i></a>
 <form action="{% url 'reviews:create' %}" method="POST">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit">
+  {% for field in form %}
+  <label for="{{ field.auto_id }}">{{ field.label}}</label>
+  {{ field }}
+  {% endfor %}
+  <div class="text-end">
+    <input type="submit" class="btn btn-info text-light">
+  </div>
 </form>
 </div>
 {% endblock content %}

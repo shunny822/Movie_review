@@ -97,3 +97,13 @@ def delete_comment(request, review_pk, comment_pk):
     if request.user == comment.user:
         comment.delete()
     return redirect('reviews:detail', review_pk)
+
+
+@login_required
+def update_comment(request, review_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        comment_form = CommentForm(request.POST, instance=comment)
+        if comment_form.is_valid():
+            comment_form.save()
+            return redirect('reviews:detail', review_pk)
