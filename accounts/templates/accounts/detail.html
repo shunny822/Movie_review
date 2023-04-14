@@ -40,16 +40,18 @@
   <h3 class="mb-3">{{ reviews|length }}개의 리뷰</h3>
   
   {% for review in reviews %}
-  <div class="review">
-    <p class="movie">{{review.movie}}</p>
-    <p class="title">{{review.title}}</p>
-    <hr>
-    <p>{{review.content}}</p>
-    <form action="#" method="POST"  class="text-end">
-      {% csrf_token %}
-      <input type="submit" value="삭제" class="btn btn-link">
-    </form>
-  </div>
+  <a href="{% url 'reviews:detail' review.pk %}" class="text-black">
+    <div class="review">
+      <p class="movie">{{review.movie}}</p>
+      <p class="title">{{review.title}}</p>
+      <hr>
+      <p>{{review.content}}</p>
+      <form action="#" method="POST"  class="text-end">
+        {% csrf_token %}
+        <input type="submit" value="삭제" class="btn btn-link">
+      </form>
+    </div>
+  </a>
   {% endfor %}
 </div>
 {% endblock content %}

@@ -5,10 +5,13 @@ from django.contrib.auth import logout as auth_logout
 from .forms import CustomUserChangeForm,CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('reviews:index')
     if request.method =='POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -23,6 +26,7 @@ def signup(request):
     return render(request,'accounts/signup.html',context)
 
 
+@login_required
 def update(request):
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance = request.user)
@@ -38,6 +42,7 @@ def update(request):
     return render(request,'accounts/update.html',context)
 
 
+@login_required
 def delete(request):
     request.user.delete()
     auth_logout(request)
@@ -45,6 +50,8 @@ def delete(request):
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('reviews:index')
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, request.POST)
         if form.is_valid():
@@ -58,11 +65,13 @@ def login(request):
     return render(request,'accounts/login.html',context)
 
 
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('reviews:index')
 
 
+@login_required
 def detail(request,account_pk):
     account = get_user_model().objects.get(pk=account_pk)
     reviews = account.review_set.all()
@@ -73,6 +82,7 @@ def detail(request,account_pk):
     return render(request,'accounts/detail.html',context)
 
 
+@login_required
 def password_change(request):
     if request.method =='POST':
         form = PasswordChangeForm(request.user, request.POST)
