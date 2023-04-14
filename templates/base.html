@@ -28,7 +28,6 @@
     .navbar {
       background-color: #001253;
       color: white;
-      position: fixed;
       width: 100%;
     }
 
@@ -56,10 +55,15 @@
     .remove-btn {
       color: red;
     }
+    .update-btn {
+      color: blue;
+    }
 
     .side-bar {
+      {% comment %} top: 40px; {% endcomment %}
+      position: sticky;
       width: 250px;
-      height: 94vh;
+      height: 100vh;
       border-right: 3px solid #001253;
     }
     {% block style %}
@@ -68,7 +72,7 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid d-flex justify-content-between">
       <a class="navbar-brand d-flex" href="{% url 'reviews:index' %}">
         <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-camera-reels-fill" viewBox="0 0 16 16">
@@ -94,7 +98,7 @@
       </div>
     </div>
   </nav>
-  <div class="d-flex pt-5" style="background-color: #ECF2FF;">
+  <div class="d-flex" style="background-color: #ECF2FF; min-height: 100vh;">
     <div class="side-bar pt-5">
       <div class="fs-5" style="padding-left: 35px;">
         <a href="{% url 'reviews:create' %}"><i class="bi bi-blockquote-right me-2"></i>리뷰 작성하기</a>
