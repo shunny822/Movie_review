@@ -5,6 +5,6 @@
   <form action="{% url 'accounts:login' %}" method ='POST'>
     {% csrf_token %}
     {{form.as_p}}
-    <input type="submit">
+    <input type="submit" value="로그인" class="btn btn-info text-light">
   </form>
 {% endblock content %}

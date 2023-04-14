@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="d-flex mb-2">
-  <a href="{% url 'reviews:index' %}" class="me-2"><i class="bi bi-chevron-left"></i></a>
+  <a href="{% url 'accounts:detail' user.pk %}" class="me-2"><i class="bi bi-chevron-left"></i></a>
   <p>정보 수정</p>
 </div>
   <form action="{% url 'accounts:update' %}" method ='POST' class="update">
@@ -19,6 +19,6 @@
         {{ field }}
       </div>
     {% endfor %} 
-    <input type="submit">
+    <input type="submit" value="수정" class="btn btn-info text-light">
   </form>
 {% endblock content %}

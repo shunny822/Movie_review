@@ -30,8 +30,22 @@
     <div class='mb-2'>{{ comment.user }}</div>
     <div style='font-size: 12px;'>{{comment.created_string}}</div>
   </div> 
-    <p style='overflow-wrap: break-word;' >{{ comment.content }}</p>
+    <p id="comment_content" style='overflow-wrap: break-word;' >{{ comment.content }}</p>
     {% if request.user == comment.user %}
+      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#{{ comment.pk }}" aria-expanded="false" aria-controls="{{ comment.pk }}" id="update_btn">
+        수정
+      </button>
+
+      <div class="collapse" id="{{ comment.pk }}">
+        <div class="card card-body">
+          <form action="{% url 'reviews:update_comment' review.pk comment.pk %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="수정">
+          </form>
+        </div>
+      </div>
+
       <form class='text-end' action="{% url 'reviews:delete_comment' review.pk comment.pk %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="삭제" class="btn btn-link remove-btn" style='font-weight: normal;'>
@@ -40,4 +54,16 @@
     <hr>
   {% endfor %}
 </div>
+<script>
+  const updateBtn = document.querySelector('#update_btn')
+  const updateForm = document.querySelector('#id_content')
+  const comment = document.querySelector('#comment_content')
+  const content = comment.innerHTML
+
+  updateBtn.addEventListener('click', (event) => {
+    console.log('helo')
+    updateForm.setAttribute('value', content)
+  })
+
+</script>
 {% endblock content %}
